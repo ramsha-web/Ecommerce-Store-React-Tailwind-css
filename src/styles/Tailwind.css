@@ -35,3 +35,27 @@
 .animate-bounceIn {
   animation: bounceIn 1s ease-out;
 }
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Style for + and - buttons */
+button {
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+
+

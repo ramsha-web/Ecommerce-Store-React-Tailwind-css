@@ -1,10 +1,10 @@
 import React from "react";
 import { useCart } from "../features/cart/CartContext";
-import { Link } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, updateQuantity } = useCart();
 
   const totalAmount = cart.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -41,8 +41,31 @@ const Cart = () => {
                   />
                   <p>{item.title}</p>
                   <p className="hidden md:block">${item.price.toFixed(2)}</p>
-                  <div className="w-16 h-12 bg-white border border-gray-300 flex items-center justify-center">
-                    {item.quantity}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() =>
+                        updateQuantity(item.id, Math.max(1, item.quantity - 1))
+                      }
+                      className=" text-gray-800 font-bold"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      onChange={(e) => {
+                        const newQuantity = Math.max(1, Number(e.target.value)); 
+                        updateQuantity(item.id, newQuantity);
+                      }}
+                      className="w-16 h-10 text-center border border-gray-300 rounded"
+                      min="1"
+                    />
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      className=" text-gray-800 font-bold"
+                    >
+                      +
+                    </button>
                   </div>
                   <p className="hidden md:block">
                     ${(item.price * item.quantity).toFixed(2)}
@@ -76,12 +99,13 @@ const Cart = () => {
                     <h3>Total</h3>
                     <h3>${totalAmount.toFixed(2)}</h3>
                   </div>
+                  {/* Proceed to Checkout Button */}
+                  <Link to="/login">
+                    <button className="w-full lg:w-64 h-14 bg-green-500 text-white font-semibold text-lg mt-4">
+                      PROCEED TO CHECKOUT
+                    </button>
+                  </Link>
                 </div>
-                <Link to="/login">
-                  <button className="w-full lg:w-64 h-14 bg-green-500 text-white font-semibold text-lg">
-                    PROCEED TO CHECKOUT
-                  </button>
-                </Link>
               </div>
 
               {/* Promo Code Section */}

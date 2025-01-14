@@ -1,36 +1,52 @@
-import React, { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { useAuth } from "../features/auth/AuthContext";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const togglePassword = () => setShowPassword(!showPassword);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const validEmail = 'user@example.com';
-    const validPassword = 'password123';
+    const validEmail = "user@example.com";
+    const validPassword = "password123";
 
     if (email === validEmail && password === validPassword) {
-      alert('Login successful!');
-      setError('');
+    
+      const userData = { email };
+      localStorage.setItem("userDetails", JSON.stringify(userData));
+
+  
+      login(userData); 
+
+      toast.success("Login successful!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+
+      setError("");
+      navigate("/ProductDetails"); 
     } else {
-      setError('Invalid email or password');
+      setError("Invalid email or password");
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-6 md:px-0">
       <div className="w-full max-w-md p-8 space-y-4 bg-white shadow-lg rounded-xl">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Login to Your Account</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800">
+          Login to Your Account
+        </h2>
 
         <form onSubmit={handleLogin} className="space-y-6">
-          {/* Email Input */}
           <div>
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-600">
               Email Address
@@ -46,14 +62,13 @@ const Login = () => {
             />
           </div>
 
-          {/* Password Input */}
           <div className="relative">
             <label htmlFor="password" className="block mb-2 font-medium text-gray-600">
               Password
             </label>
             <div className="items-center flex relative">
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="Enter Your Password"
                 value={password}
@@ -71,8 +86,8 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Error Message */}
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
           <button
             type="submit"
             className="w-full px-4 py-2 text-white bg-orange-600 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring focus:ring-red-300"
@@ -80,15 +95,6 @@ const Login = () => {
             Login
           </button>
         </form>
-
-        <div className="text-center">
-          <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
-            <a href="#" className="text-orange-600 hover:underline">
-              Sign up
-            </a>
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -17,12 +17,14 @@ const CategoryCard = ({ category }) => {
 
       <div className="relative z-10">
         <Link
-          to={`/category/${category.id}`}
+          to={`/category/${category.id}`} 
           className="inline-block text-white bg-orange-500 px-4 py-2 rounded-full font-semibold shadow-md hover:bg-orange-600 hover:shadow-lg transition-all duration-300"
         >
           View Products
         </Link>
       </div>
+      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${category.imageUrl})` }}></div>
+
       <div className="absolute inset-0 border-2 border-transparent rounded-lg group-hover:border-orange-500 transition-all duration-300"></div>
     </div>
   );

@@ -11,7 +11,6 @@ export const CartProvider = ({ children }) => {
     const savedCart = localStorage.getItem('cart');
     return savedCart ? JSON.parse(savedCart) : [];
   });
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -30,23 +29,23 @@ export const CartProvider = ({ children }) => {
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
-
-    setMessage(`${product.name} added to cart!`);
-    setTimeout(() => setMessage(''), 2000);
   };
 
   const removeFromCart = (productId) => {
     setCart(cart.filter((item) => item.id !== productId));
   };
 
+  const updateQuantity = (productId, newQuantity) => {
+    setCart(
+      cart.map((item) =>
+        item.id === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, setCart, message }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, setCart }}>
       {children}
-      {message && (
-        <div className="fixed bottom-4 left-4 bg-green-500 text-white px-4 py-2 rounded">
-          {message}
-        </div>
-      )}
     </CartContext.Provider>
   );
 };

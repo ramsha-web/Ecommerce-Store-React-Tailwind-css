@@ -5,7 +5,7 @@ import { FaFacebook, FaInstagram, FaPinterest, FaTwitterSquare } from 'react-ico
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-200 py-10">
+    <footer className="bg-gray-800 text-gray-200 py-10 mt-auto">
       <div className="max-w-7xl mx-auto px-4 md:flex md:justify-between">
         <div className="mb-6 md:mb-0">
           <Link to="/">
@@ -56,7 +56,7 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Your email address"
-              className="w-full p-2 rounded-l-md bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              className="w-full p-2 rounded-l-md bg-gray-100 text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
             />
             <button type="submit" className="bg-orange-600 text-white px-4 rounded-r-md hover:bg-orange-700">
               Subscribe
